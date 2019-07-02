@@ -1,18 +1,20 @@
 #!/bin/bash
 # make sure that interpreter is located in above directory ('which bash')
 
-echo "(Step 1): Exporting brew apps to /Backup/brewAppsList.txt..."
+brewAppsFile=Backup/brewAppsList.txt
+appstoreAppsFile=Backup/appstoreAppsList.txt
+
+echo "(Step 1): Exporting brew apps to $brewAppsFile..."
 mkdir Backup
-touch Backup/brewAppsList.txt
-brew list > Backup/brewAppsList.txt
+touch $brewAppsFile
+brew list > $brewAppsFile
 echo "Step 1/2 completed"
 
-echo "(Step 2): Exporting apps from AppStore to /Backup/appstoreAppsList.txt..."
+echo "(Step 2): Exporting apps from AppStore to $appstoreAppsFile..."
 
 brew install mas
-touch Backup/appstoreAppsList.txt
-mas list > Backup/appstoreAppsList.txt
+touch $appstoreAppsFile
+mas list > $appstoreAppsFile
 
-# sed '/[^0-9]//a \
-#' Backup/appstoreAppsList.txt
+sed -i "" -E 's/[[:digit:]]+/& #/' $appstoreAppsFile
 echo "Step 2/2 completed"
