@@ -18,3 +18,4 @@ mas list > $appstoreAppsFile
 
 sed -i "" -E 's/[[:digit:]]+/& #/' $appstoreAppsFile
 echo "Step 2/2 completed"
+
