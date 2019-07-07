@@ -3,6 +3,7 @@
 
 brewAppsFile=Backup/brewAppsList.txt
 appstoreAppsFile=Backup/appstoreAppsList.txt
+gitConfigFile=Backup/gitconfig.txt
 
 echo "(Step 1): Exporting brew apps to $brewAppsFile..."
 mkdir Backup
@@ -17,5 +18,12 @@ touch $appstoreAppsFile
 mas list > $appstoreAppsFile
 
 sed -i "" -E 's/[[:digit:]]+/& #/' $appstoreAppsFile
-echo "Step 2/2 completed"
+echo "Step 2/3 completed"
+
+if test -f $HOME/.gitconfig; then
+echo "(Step 3): Exporting git configuration settings to $gitConfigFile..."
+    touch $gitConfigFile
+    cat $HOME/.gitconfig > $gitConfigFile
+    echo "Step 3/3 completed"
+fi
 
