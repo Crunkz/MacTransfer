@@ -13,7 +13,11 @@ echo "Step 1/2 completed"
 
 echo "(Step 2): Exporting apps from AppStore to $appstoreAppsFile..."
 
-brew install mas
+if [[ $(command -v mas) == "" ]]; then
+    echo "Installing mas..."
+    brew install mas
+fi
+
 touch $appstoreAppsFile
 mas list > $appstoreAppsFile
 
@@ -21,7 +25,7 @@ sed -i "" -E 's/[[:digit:]]+/& #/' $appstoreAppsFile
 echo "Step 2/3 completed"
 
 if test -f $HOME/.gitconfig; then
-echo "(Step 3): Exporting git configuration settings to $gitConfigFile..."
+    echo "(Step 3): Exporting git configuration settings to $gitConfigFile..."
     touch $gitConfigFile
     cat $HOME/.gitconfig > $gitConfigFile
     echo "Step 3/3 completed"
