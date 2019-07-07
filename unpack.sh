@@ -55,19 +55,39 @@ fi
 
 echo -e "${PURPLE}Setting user defaults...${NO_COLOR}"
 
+# enable project build time
+defaults write com.apple.dt.Xcode ShowBuildOperationDuration -bool YES
+
 # keep Xcode and Simulator on the same page
 defaults write com.apple.iphonesimulator AllowFullscreenMode -bool YES
 
+# disable automatic reopening of last project (makes running projects on multiple xcode versions possible)
+defaults write com.apple.dt.Xcode ApplePersistenceIgnoreState -bool YES
+
 # indicate hidden app dock icons
 defaults write com.apple.dock showhidden -bool TRUE; killall Dock
-
-# remove all dock icons except Finder
-defaults write com.apple.dock persistent-apps -array
 
 # stop Photos from opening automatically (for all devices)
 defaults write com.apple.ImageCapture disableHotPlug -bool YES
 
 # no more asking for password during every Xcode build
 DevToolsSecurity -enable
+
+# Save screenshots to the desktop
+defaults write com.apple.screencapture location -string "${HOME}/Desktop"
+
+# Finder: allow quitting via command+Q
+defaults write com.apple.finder QuitMenuItem -bool true
+
+# remove all dock icons except Finder
+
+read -r -p "Would you like to remove all Dock icons (except Finder)? [y/N] " response
+if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]
+then
+    defaults write com.apple.dock persistent-apps -array
+    killall Dock
+fi
+
+
 
 
