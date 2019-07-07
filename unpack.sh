@@ -43,6 +43,15 @@ echo -e "${PURPLE}\nInstalling $app_name (ID: $app_id)...${NO_COLOR}"
     mas install $app_id
 done < $appstoreAppsFile
 
+# import gitconfig from the backup file if exists
+
+gitConfigFile=Backup/gitconfig.txt
+
+if test -f $gitConfigFile; then
+    echo -e "${PURPLE}Importing git configuration settings...${NO_COLOR}"
+    touch $HOME/.gitconfig
+    cat $gitConfigFile > $HOME/.gitconfig
+fi
 
 echo -e "${PURPLE}Setting user defaults...${NO_COLOR}"
 
